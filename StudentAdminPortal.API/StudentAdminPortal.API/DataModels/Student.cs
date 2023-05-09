@@ -10,7 +10,7 @@
 
         public DateTime DateOfBirth { get; set; }
 
-        public string  Email { get; set; }
+       // public string  Email { get; set; }
 
         public long Mobile { get; set; }
 
@@ -22,5 +22,6 @@
         public Gender Gender { get; set; }
 
         public Address Address { get; set; }
+        
     }
 }

@@ -17,6 +17,13 @@ namespace StudentAdminPortal.API.Controllers
             this.studentRepository = studentRepository;
             this.mapper = mapper;
         }
+        
+        [HttpGet("get-studentByNameFromSp")]
+        public async Task<IActionResult> GetStudentsFromSpAsync(string FirstName)
+        {
+            var students = await studentRepository.GetStudentsFromSpAsync(FirstName);           
+            return Ok(mapper.Map<List<Student>>(students));
+        }
 
         [HttpGet("get-allstudents")]       
         public async Task<IActionResult> GetAllStudentsAsync()
@@ -51,6 +58,17 @@ namespace StudentAdminPortal.API.Controllers
             //    });
             //}
             return Ok(mapper.Map<List<Student>>(students));
+        }
+
+        [HttpGet("get-student/{id}")]       
+        public async Task<IActionResult> GetStudentAsync([FromRoute]int id)
+        {
+            var student = await studentRepository.GetStudentAsync(id);
+            if(student == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<Student>(student));
         }
     }
 }

@@ -17,6 +17,18 @@ namespace StudentAdminPortal.API.Repositories
             return await _context.Tbl_SA_Student.Include(nameof(Gender)).Include(nameof(Address)).ToListAsync();
         }
 
-        
+        public async Task<Student> GetStudentAsync(int id)
+        {
+            return await _context.Tbl_SA_Student
+                .Include(nameof(Gender)).Include(nameof(Address))
+                .FirstOrDefaultAsync(x=>x.Id == id);
+        }
+
+        public async Task<List<Student>> GetStudentsFromSpAsync(string FirstName)
+        {
+            return await _context.Tbl_SA_Student.FromSqlRaw($"GetStudentByName {FirstName}").ToListAsync();
+                
+        }
+
     }
 }
