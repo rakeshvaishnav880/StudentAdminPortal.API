@@ -25,6 +25,13 @@ namespace StudentAdminPortal.API.Controllers
             return Ok(mapper.Map<List<Student>>(students));
         }
 
+        [HttpGet("get-allstudentByJoins")]
+        public async Task<IActionResult> GetallStudentsByJoins()
+        {
+            var students = await studentRepository.GetStudentsByJoinsAsync();
+            return Ok(mapper.Map<List<Student>>(students));
+        }
+
         [HttpGet("get-allstudents")]       
         public async Task<IActionResult> GetAllStudentsAsync()
         {
