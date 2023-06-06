@@ -53,11 +53,7 @@ namespace StudentAdminPortal.API.Repositories
                         Id = s.genderId,
                         Discription = s.genderdescription
                     },
-                    ProfileImageUrl = s.ProfileImageUrl,
-                    Address = new Address
-                    {
-                        Id = s.
-                    }
+                    ProfileImageUrl = s.ProfileImageUrl,                    
                 };
                 allstudents.Add(newstudnent);
                 //};
@@ -92,9 +88,39 @@ namespace StudentAdminPortal.API.Repositories
             return await _context.Tbl_SA_Gender.ToListAsync();
         }
 
-        Task<List<DataModels.Gender>> IStudentRepository.GetGendersAsync()
+        public async Task<Student> UpdateStudentById(int id, Student updatedstudent)
         {
-            throw new NotImplementedException();
+            var existingstudent = await GetStudentAsync(id);
+            if (existingstudent == null)
+            {
+                return null;
+            }
+            else
+            {
+                existingstudent.FirstName = updatedstudent.FirstName;
+                existingstudent.LastName = updatedstudent.LastName;
+                existingstudent.DateOfBirth = updatedstudent.DateOfBirth;
+                existingstudent.Mobile = updatedstudent.Mobile;
+                existingstudent.Email = updatedstudent.Email;
+                existingstudent.GenderId = updatedstudent.GenderId;
+                existingstudent.Address.PhysicalAddress = updatedstudent.Address.PhysicalAddress;
+                existingstudent.Address.PostalAddress = updatedstudent.Address.PostalAddress;
+                await _context.SaveChangesAsync();
+                return existingstudent;
+            }
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            var student = await _context.Tbl_SA_Student.FirstOrDefaultAsync(x => x.Id == id);
+            if (student == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

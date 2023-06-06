@@ -13,5 +13,9 @@ namespace StudentAdminPortal.API.Repositories
         Task<List<Student>> GetStudentsFromSpAsync(string FirstName);
 
         Task<List<Gender>> GetGendersAsync();
+
+        Task<Student> UpdateStudentById(int id,Student updatedstudent);
+
+        Task<bool> Exists(int id);
     }
 }
