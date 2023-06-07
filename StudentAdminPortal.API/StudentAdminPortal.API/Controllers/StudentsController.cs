@@ -79,7 +79,7 @@ namespace StudentAdminPortal.API.Controllers
 
         }
 
-        [HttpPut("update-StudentByid/{id}")]
+        [HttpPut("update-studentByid/{id}")]
         public async Task<IActionResult> UpdateStudentAsync([FromRoute]int id,[FromBody]UpdateStudentRequest student)
         {
             if(await studentRepository.Exists(id))
@@ -91,6 +91,17 @@ namespace StudentAdminPortal.API.Controllers
                 }
             }           
                 return NotFound();
+        }
+
+        [HttpDelete("delete-studentByid/{id}")]
+        public async Task<IActionResult> DeleteStudentAsync([FromRoute] int id)
+        {
+            if (await studentRepository.Exists(id))
+            {
+                var student = await studentRepository.DeleteStudentAsync(id);
+                return Ok(mapper.Map<Student>(student));
+            }
+            return NotFound();
         }
     }
 }

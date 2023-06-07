@@ -122,5 +122,17 @@ namespace StudentAdminPortal.API.Repositories
                 return true;
             }
         }
+
+        public async Task<Student> DeleteStudentAsync(int id)
+        {
+            var student = await GetStudentAsync(id);
+            if(student!=null)
+            {
+                _context.Tbl_SA_Student.Remove(student);
+                await _context.SaveChangesAsync();
+                return student;
+            }
+            return null;
+        }
     }
 }
