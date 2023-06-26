@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.DomainModels;
 using StudentAdminPortal.API.Repositories;
+using Student = StudentAdminPortal.API.DomainModels.Student;
 
 namespace StudentAdminPortal.API.Controllers
 {
@@ -67,7 +69,7 @@ namespace StudentAdminPortal.API.Controllers
             return Ok(mapper.Map<List<Student>>(students));
         }
 
-        [HttpGet("get-student/{id}")]       
+        [HttpGet("get-student/{id}"),ActionName("GetStudentAsync")]       
         public async Task<IActionResult> GetStudentAsync([FromRoute]int id)
         {
             var student = await studentRepository.GetStudentAsync(id);
@@ -100,6 +102,19 @@ namespace StudentAdminPortal.API.Controllers
             {
                 var student = await studentRepository.DeleteStudentAsync(id);
                 return Ok(mapper.Map<Student>(student));
+            }
+            return NotFound();
+        }
+
+        [HttpPost("add-newstudent")]
+        public async Task<IActionResult> AddStudentAsync([FromBody] AddStudentRequest request)
+        {
+            //Add new student service call
+            var newstudent = 
+                await studentRepository.AddStudentAsync(mapper.Map<DataModels.Student>(request));
+            if(newstudent!=null)
+            {
+                return CreatedAtAction(nameof(GetStudentAsync),new {id = newstudent.Id }, mapper.Map<Student>(newstudent));
             }
             return NotFound();
         }

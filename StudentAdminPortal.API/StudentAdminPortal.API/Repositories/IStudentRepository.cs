@@ -19,5 +19,7 @@ namespace StudentAdminPortal.API.Repositories
         Task<bool> Exists(int id);
 
         Task<Student> DeleteStudentAsync(int id);
+
+        Task<Student> AddStudentAsync(Student student);       
     }
 }
