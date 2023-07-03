@@ -7,10 +7,10 @@ using StudentAdminPortal.API.Repositories;
 namespace StudentAdminPortal.API.Controllers
 {
     [Route("[controller]")]
-    [ApiController]
-    public class GendersController : ControllerBase
+    [ApiController]    public class GendersController : ControllerBase
     {
         private readonly IStudentRepository studentRepository;
+
         private readonly IMapper mapper;
 
         public GendersController(IStudentRepository studentRepository, IMapper mapper)
@@ -18,7 +18,8 @@ namespace StudentAdminPortal.API.Controllers
             this.studentRepository = studentRepository;
             this.mapper = mapper;
         }
-
+       
+        //get-all-gender
         [HttpGet("get-allgenders")]
         public async Task<IActionResult> GetAllGenders()
         {
