@@ -148,5 +148,17 @@ namespace StudentAdminPortal.API.Repositories
                 return null;
             }
         }
+
+        public async Task<bool> UploadProfileImage(int id, string profileImageUrl)
+        {
+            var student = await GetStudentAsync(id);
+            if (student != null)
+            {
+                student.ProfileImageUrl = profileImageUrl;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }
